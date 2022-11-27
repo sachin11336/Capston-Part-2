@@ -4,7 +4,6 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
@@ -12,9 +11,7 @@ import authService from "../Auth/service.auth";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-
 import { useEffect } from "react";
-
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -35,25 +32,16 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
 }));
-
 export default function Login() {
   const classes = useStyles();
   const [password, setPassword] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [submitAction, setSubmitAction] = React.useState(false);
-
-  /*useEffect(() => {
-      if(authService.isLoggedIn()) {
-        props.history.push('/my-bookings');
-      }
-  }, []);*/
-
   useEffect(() => {
     async function doAuth() {
       if (!submitAction) {
         return;
       }
-
       try {
         let { data } = await authService.doAuth(email, password);
         console.log(data);
@@ -64,15 +52,12 @@ export default function Login() {
         setSubmitAction(false);
       }
     }
-
     doAuth();
   }, [submitAction]);
-
   const submitForm = (event) => {
     event.preventDefault();
     setSubmitAction(true);
   };
-
   return (
     <div>
       <Container component="main" maxWidth="xs">
@@ -136,70 +121,3 @@ export default function Login() {
     </div>
   );
 }
-
-import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import { Nav } from "react-bootstrap";
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    padding: theme.spacing(2),
-    "& .MuiTextField-root": {
-      margin: theme.spacing(1),
-      width: "300px",
-    },
-    "& .MuiButtonBase-root": {
-      margin: theme.spacing(2),
-    },
-  },
-}));
-const Login = ({ handleClose }) => {
-  const classes = useStyles();
-  // create state variables for each input
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(firstName, lastName, email, password);
-    handleClose();
-  };
-  return (
-    <form className={classes.root} onSubmit={handleSubmit}>
-      <TextField
-        label="Email"
-        variant="filled"
-        type="email"
-        required
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <TextField
-        label="Password"
-        variant="filled"
-        type="password"
-        required
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <div>
-        <Button variant="contained" onClick={handleClose}>
-          Cancel
-        </Button>
-        <Button type="submit" variant="contained" color="primary">
-          Signup
-        </Button>
-        <Nav.Link href="/signUp" style={{ color: "blue" }}>
-          Create new account
-        </Nav.Link>
-      </div>
-    </form>
-  );
-};
-export default Login;

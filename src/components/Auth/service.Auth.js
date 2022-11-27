@@ -2,16 +2,15 @@ import jwt_decode from "jwt-decode";
 import xhrService from "./xhr.service";
 
 const doAuth = async (email, password) => {
-  let response = await xhrService.post("http://localhost:8000/auth", {
+  let response = await xhrService.post('http://localhost:8000/auth', {
     email,
     password,
   });
 
   console.log(response);
-  localStorage.setItem("token", response.headers["token"]);
-
+  localStorage.setItem('token', response.headers['token']);
   return response;
-};
+}
 
 const isLoggedIn = () => {
   const data = localStorage.getItem("token");
@@ -19,7 +18,7 @@ const isLoggedIn = () => {
     return false;
   }
   return data;
-};
+}
 
 const getToken = () => {
   console.log("Returning token", localStorage.getItem("token"));
@@ -33,7 +32,7 @@ const isAdmin = () => {
   } catch (Ex) {
     return false;
   }
-};
+}
 
 const getUser = () => {
   try {
@@ -42,12 +41,12 @@ const getUser = () => {
   } catch (Ex) {
     return {};
   }
-};
+}
 
 const doLogout = () => {
   localStorage.removeItem("token");
   window.location = "/";
-};
+}
 
 export default {
   doAuth,
@@ -56,4 +55,4 @@ export default {
   doLogout,
   getToken,
   getUser,
-};
+}
